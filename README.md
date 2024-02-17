@@ -5,6 +5,8 @@
 
 _If you've taken the [Cyfrin Updraft security & auditing course](https://updraft.cyfrin.io/courses/security), this will look very familiar to you!_
 
+_This will be one of the more challenging first flights, but understanding the basics of how a DEX works will be crucial if you want to get good at auditing DeFi smart contracts._
+
 # Contest Details
 
 ### Prize Pool
@@ -19,9 +21,29 @@ _If you've taken the [Cyfrin Updraft security & auditing course](https://updraft
 ### Stats
 
 - nSLOC: 
-  - 
+  - 276
 - Complexity Score:
-  - 
+  - 174
+
+- [Contest Details](#contest-details)
+    - [Prize Pool](#prize-pool)
+    - [Stats](#stats)
+  - [TSwap](#tswap)
+  - [TSwap Pools](#tswap-pools)
+  - [Liquidity Providers](#liquidity-providers)
+    - [Why would I want to add tokens to the pool?](#why-would-i-want-to-add-tokens-to-the-pool)
+    - [LP Example](#lp-example)
+  - [Core Invariant](#core-invariant)
+  - [Make a swap](#make-a-swap)
+- [Getting Started](#getting-started)
+  - [Requirements](#requirements)
+  - [Quickstart](#quickstart)
+- [Usage](#usage)
+  - [Testing](#testing)
+    - [Test Coverage](#test-coverage)
+- [Audit Scope Details](#audit-scope-details)
+  - [Actors / Roles](#actors--roles)
+  - [Known Issues](#known-issues)
 
 
 ## TSwap 
@@ -112,25 +134,6 @@ A user can either choose exactly how much to input (ie: I want to use 10 USDC to
 
 *This codebase is based loosely on [Uniswap v1](https://github.com/Uniswap/v1-contracts/tree/master)*
 
-- [Contest Details](#contest-details)
-    - [Prize Pool](#prize-pool)
-    - [Stats](#stats)
-  - [TSwap](#tswap)
-  - [TSwap Pools](#tswap-pools)
-  - [Liquidity Providers](#liquidity-providers)
-    - [Why would I want to add tokens to the pool?](#why-would-i-want-to-add-tokens-to-the-pool)
-    - [LP Example](#lp-example)
-  - [Core Invariant](#core-invariant)
-  - [Make a swap](#make-a-swap)
-- [Getting Started](#getting-started)
-  - [Requirements](#requirements)
-  - [Quickstart](#quickstart)
-- [Usage](#usage)
-  - [Testing](#testing)
-    - [Test Coverage](#test-coverage)
-- [Audit Scope Details](#audit-scope-details)
-  - [Actors / Roles](#actors--roles)
-  - [Known Issues](#known-issues)
 
 # Getting Started
 
@@ -144,8 +147,8 @@ A user can either choose exactly how much to input (ie: I want to use 10 USDC to
 ## Quickstart
 
 ```
-git clone https://github.com/Cyfrin/5-t-swap-audit
-cd 5-t-swap-audit
+git clone https://github.com/Cyfrin/2024-02-t-swap
+cd 2024-02-t-swap
 make 
 ```
 
@@ -171,7 +174,7 @@ forge coverage --report debug
 
 # Audit Scope Details
 
-- Commit Hash: e643a8d4c2c802490976b538dd009b351b1c8dda
+- Commit Hash: XXX
 - In Scope:
 ```
 ./src/
