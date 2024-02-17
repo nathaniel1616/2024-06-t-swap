@@ -1,8 +1,30 @@
+
 <p align="center">
 <img src="./images/t-swap-youtube-dimensions.png" width="400" alt="t-swap">
 <br/>
 
-# TSwap 
+_If you've taken the [Cyfrin Updraft security & auditing course](https://updraft.cyfrin.io/courses/security), this will look very familiar to you!_
+
+# Contest Details
+
+### Prize Pool
+
+- High - 100xp
+- Medium - 20xp
+- Low - 2xp
+
+- Starts: XXX
+- Ends: XXX
+
+### Stats
+
+- nSLOC: 
+  - 
+- Complexity Score:
+  - 
+
+
+## TSwap 
 
 This project is meant to be a permissionless way for users to swap assets between each other at a fair price. You can think of T-Swap as a decentralized asset/token exchange (DEX). 
 T-Swap is known as an [Automated Market Maker (AMM)](https://chain.link/education-hub/what-is-an-automated-market-maker-amm) because it doesn't use a normal "order book" style exchange, instead it uses "Pools" of an asset. 
@@ -90,7 +112,10 @@ A user can either choose exactly how much to input (ie: I want to use 10 USDC to
 
 *This codebase is based loosely on [Uniswap v1](https://github.com/Uniswap/v1-contracts/tree/master)*
 
-- [TSwap](#tswap)
+- [Contest Details](#contest-details)
+    - [Prize Pool](#prize-pool)
+    - [Stats](#stats)
+  - [TSwap](#tswap)
   - [TSwap Pools](#tswap-pools)
   - [Liquidity Providers](#liquidity-providers)
     - [Why would I want to add tokens to the pool?](#why-would-i-want-to-add-tokens-to-the-pool)
