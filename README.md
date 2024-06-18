@@ -15,8 +15,8 @@ _This will be one of the more challenging first flights, but understanding the b
 - Medium - 20xp
 - Low - 2xp
 
-- Starts: XXX
-- Ends: XXX
+- Starts: June 20, 2024 Noon UTC
+- Ends: June 27, 2024 Noon UTC
 
 ### Stats
 
@@ -147,8 +147,8 @@ A user can either choose exactly how much to input (ie: I want to use 10 USDC to
 ## Quickstart
 
 ```
-git clone https://github.com/Cyfrin/2024-02-t-swap
-cd 2024-02-t-swap
+git clone https://github.com/Cyfrin/2024-06-t-swap
+code 2024-06-t-swap
 make 
 ```
 
