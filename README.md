@@ -1,6 +1,6 @@
 
 <p align="center">
-<img src="https://res.cloudinary.com/droqoz7lg/image/upload/q_90/dpr_2.0/c_fill,g_auto,h_320,w_320/f_auto/v1/company/yy5s3jzxfd9zula8go0q?_a=BATAUVAA0" width="400" alt="t-swap">
+<img src="https://res.cloudinary.com/droqoz7lg/image/upload/q_90/dpr_2.0/c_fill,g_auto,h_320,w_320/f_auto/v1/company/yy5s3jzxfd9zula8go0q?_a=BATAUVAA0" width="200" alt="t-swap">
 <br/>
 
 _If you've taken the [Cyfrin Updraft security & auditing course](https://updraft.cyfrin.io/courses/security), this will look very familiar to you!_
