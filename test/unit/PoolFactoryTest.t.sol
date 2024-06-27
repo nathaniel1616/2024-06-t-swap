@@ -29,4 +29,16 @@ contract PoolFactoryTest is Test {
         vm.expectRevert(abi.encodeWithSelector(PoolFactory.PoolFactory__PoolAlreadyExists.selector, address(tokenA)));
         factory.createPool(address(tokenA));
     }
+
+    ///////////////////////////////////////////////////////////////////////////
+    //////                            Audit POC                  //////////////
+    ///////////////////////////////////////////////////////////////////////////
+
+    //@ q can you create more than one pool?
+    function testCanCreateManyPools() public {
+        address poolAddressA = factory.createPool(address(tokenA));
+        address poolAddressB = factory.createPool(address(tokenB));
+        assertEq(address(tokenA), factory.getToken(poolAddressA));
+        assertEq(address(tokenB), factory.getToken(poolAddressB));
+    }
 }

@@ -15,7 +15,7 @@
 | ------------------------------------------------------- | ---------------------------------------- |
 | Commit hash                                             | e643a8d4c2c802490976b538dd009b351b1c8dda |
 | Number of Contracts in Scope                            | 2                                        |
-| Total SLOC for contracts in scope                       |                                          |
+| Total SLOC for contracts in scope                       | 195                                      |
 | Complexity Score                                        |                                          |
 | How many external protocols does the code interact with |                                          |
 | Overall test coverage for code under audit              |                                          |

@@ -89,6 +89,7 @@ contract TSwapPool is ERC20 {
     /// @param maximumPoolTokensToDeposit The maximum amount of pool tokens the user is willing to deposit, again it's
     /// derived from the amount of WETH the user is going to deposit
     /// @param deadline The deadline for the transaction to be completed by
+    // @ q used dealine paramenter , check the natSpec and the function parameters?
     function deposit(
         uint256 wethToDeposit,
         uint256 minimumLiquidityTokensToMint,
@@ -110,7 +111,7 @@ contract TSwapPool is ERC20 {
             // poolTokens / constant(k) = weth
             // weth / constant(k) = liquidityTokens
             // aka...
-            // weth / poolTokens = constant(k)
+            // weth / poolTokens = constant(k)  //@q this line and two lines above are different eqn ?
             // To make sure this holds, we can make sure the new balance will match the old balance
             // (wethReserves + wethToDeposit) / (poolTokenReserves + poolTokensToDeposit) = constant(k)
             // (wethReserves + wethToDeposit) / (poolTokenReserves + poolTokensToDeposit) =
@@ -120,17 +121,20 @@ contract TSwapPool is ERC20 {
             // (wethReserves + wethToDeposit) / poolTokensToDeposit = wethReserves
             // (wethReserves + wethToDeposit)  = wethReserves * poolTokensToDeposit
             // (wethReserves + wethToDeposit) / wethReserves  =  poolTokensToDeposit
-            uint256 poolTokensToDeposit = getPoolTokensToDepositBasedOnWeth(wethToDeposit);
+            uint256 poolTokensToDeposit = getPoolTokensToDepositBasedOnWeth(wethToDeposit); // @ q is the math right ?
+                // Write test to proof it .
             if (maximumPoolTokensToDeposit < poolTokensToDeposit) {
                 revert TSwapPool__MaxPoolTokenDepositTooHigh(maximumPoolTokensToDeposit, poolTokensToDeposit);
             }
 
             // We do the same thing for liquidity tokens. Similar math.
-            liquidityTokensToMint = wethToDeposit * totalLiquidityTokenSupply() / wethReserves;
+            liquidityTokensToMint = wethToDeposit * totalLiquidityTokenSupply() / wethReserves; // @ q what if
+                // wethReserves == 0?
             if (liquidityTokensToMint < minimumLiquidityTokensToMint) {
                 revert TSwapPool__MinLiquidityTokensToMintTooLow(minimumLiquidityTokensToMint, liquidityTokensToMint);
             }
-            _addLiquidityMintAndTransfer(wethToDeposit, poolTokensToDeposit, liquidityTokensToMint);
+            _addLiquidityMintAndTransfer(wethToDeposit, poolTokensToDeposit, liquidityTokensToMint); // @ q the else
+                // block in the this code be reachable?
         } else {
             // This will be the "initial" funding of the protocol. We are starting from blank here!
             // We just have them send the tokens in, and we mint liquidity tokens based on the weth
@@ -139,6 +143,7 @@ contract TSwapPool is ERC20 {
         }
     }
 
+    // @ q why so? , look the addLiquidity function
     /// @dev This is a sensitive function, and should only be called by addLiquidity
     /// @param wethToDeposit The amount of WETH the user is going to deposit
     /// @param poolTokensToDeposit The amount of pool tokens the user is going to deposit
@@ -150,6 +155,8 @@ contract TSwapPool is ERC20 {
     )
         private
     {
+        // @ q are there internal accounting eg, mapping to track, tokens to mint,, and who has made a deposit ,
+        // @ q rember this is an erc20 contract  , it may have its internal accounting
         _mint(msg.sender, liquidityTokensToMint);
         emit LiquidityAdded(msg.sender, poolTokensToDeposit, wethToDeposit);
 
@@ -224,9 +231,9 @@ contract TSwapPool is ERC20 {
         // totalPoolTokensOfPool) + (wethToDeposit * poolTokensToDeposit) = k
         // (totalWethOfPool * totalPoolTokensOfPool) + (wethToDeposit * totalPoolTokensOfPool) = k - (totalWethOfPool *
         // poolTokensToDeposit) - (wethToDeposit * poolTokensToDeposit)
-        uint256 inputAmountMinusFee = inputAmount * 997;
+        uint256 inputAmountMinusFee = inputAmount * 997; //@ issue  dont  use magic number (997)
         uint256 numerator = inputAmountMinusFee * outputReserves;
-        uint256 denominator = (inputReserves * 1000) + inputAmountMinusFee;
+        uint256 denominator = (inputReserves * 1000) + inputAmountMinusFee; //@ issue  dont  use magic number (1000)
         return numerator / denominator;
     }
 
@@ -255,6 +262,7 @@ contract TSwapPool is ERC20 {
         revertIfZero(inputAmount)
         revertIfDeadlinePassed(deadline)
         returns (uint256 output)
+    //@audit-q should return something
     {
         uint256 inputReserves = inputToken.balanceOf(address(this));
         uint256 outputReserves = outputToken.balanceOf(address(this));
@@ -308,7 +316,7 @@ contract TSwapPool is ERC20 {
         if (_isUnknown(inputToken) || _isUnknown(outputToken) || inputToken == outputToken) {
             revert TSwapPool__InvalidToken();
         }
-
+        //@ audit-q  taking out something ?
         swap_count++;
         if (swap_count >= SWAP_COUNT_MAX) {
             swap_count = 0;
@@ -333,7 +341,7 @@ contract TSwapPool is ERC20 {
     function getPoolTokensToDepositBasedOnWeth(uint256 wethToDeposit) public view returns (uint256) {
         uint256 poolTokenReserves = i_poolToken.balanceOf(address(this));
         uint256 wethReserves = i_wethToken.balanceOf(address(this));
-        return wethToDeposit * poolTokenReserves / wethReserves;
+        return wethToDeposit * poolTokenReserves / wethReserves; // @ q is this the correct formula?  x*y  = k ,
     }
 
     /// @notice a more verbose way of getting the total supply of liquidity tokens
