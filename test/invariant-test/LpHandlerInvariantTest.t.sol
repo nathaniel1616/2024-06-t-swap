@@ -9,7 +9,7 @@ import { PoolFactory } from "../../src/PoolFactory.sol";
 import { StdInvariant } from "forge-std/StdInvariant.sol";
 import { Handler } from "./Handler.t.sol";
 
-contract HandlerInvariantTest is StdInvariant, Test {
+contract LpHandlerInvariantTest is StdInvariant, Test {
     TSwapPool pool;
     ERC20Mock poolToken;
     ERC20Mock weth;
@@ -47,5 +47,30 @@ contract HandlerInvariantTest is StdInvariant, Test {
         console.log("wethBalanceOfLiquidProvider", wethBalanceOfLiquidProvider);
         console.log("number of deposits", handler.countLpDeposit());
         assertEq(weth.balanceOf(address(pool)), LP_STARTING_BALANCE - wethBalanceOfLiquidProvider);
+    }
+
+    //     function testDepositSwap() public {
+    //     vm.startPrank(liquidityProvider);
+    //     weth.approve(address(pool), 100e18);
+    //     poolToken.approve(address(pool), 100e18);
+    //     pool.deposit(100e18, 100e18, 100e18, uint64(block.timestamp));
+    //     vm.stopPrank();
+
+    //     vm.startPrank(user);
+    //     poolToken.approve(address(pool), 10e18);
+    //     // After we swap, there will be ~110 tokenA, and ~91 WETH
+    //     // 100 * 100 = 10,000
+    //     // 110 * ~91 = 10,000
+    //     uint256 expected = 9e18;
+
+    //     pool.swapExactInput(poolToken, 10e18, weth, expected, uint64(block.timestamp));
+    //     assert(weth.balanceOf(user) >= expected);
+    // }
+    function invariant__UserCanMkaeSwap() public {
+        uint256 wethBalanceOfUser = weth.balanceOf(user);
+        uint256 poolTokenBalanceOfLiquidProvider = poolToken.balanceOf(liquidityProvider);
+        console.log("weth balance of user", wethBalanceOfUser);
+        // console.log("number of deposits", depositHandler.countUserDeposit());
+        assertEq(wethBalanceOfUser, 1);
     }
 }
