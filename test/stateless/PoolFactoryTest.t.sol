@@ -1,9 +1,9 @@
 // SPDX-License-Identifier: MIT
 pragma solidity 0.8.20;
 
-import { Test, console } from "forge-std/Test.sol";
-import { PoolFactory } from "../../src/PoolFactory.sol";
-import { ERC20Mock } from "@openzeppelin/contracts/mocks/token/ERC20Mock.sol";
+import {Test, console} from "forge-std/Test.sol";
+import {PoolFactory} from "../../src/PoolFactory.sol";
+import {ERC20Mock} from "@openzeppelin/contracts/mocks/token/ERC20Mock.sol";
 
 contract PoolFactoryTest is Test {
     PoolFactory factory;
@@ -17,7 +17,7 @@ contract PoolFactoryTest is Test {
     }
 
     function testFuzzCreatePool(ERC20Mock _token) public {
-        _token = new ERC20Mock();
+        // _token = new ERC20Mock();
         address poolAddress = factory.createPool(address(_token));
         assertEq(poolAddress, factory.getPool(address(_token)));
         assertEq(address(_token), factory.getToken(poolAddress));
@@ -27,7 +27,12 @@ contract PoolFactoryTest is Test {
         _token = new ERC20Mock();
         console.log(address(_token));
         factory.createPool(address(_token));
-        vm.expectRevert(abi.encodeWithSelector(PoolFactory.PoolFactory__PoolAlreadyExists.selector, address(_token)));
+        vm.expectRevert(
+            abi.encodeWithSelector(
+                PoolFactory.PoolFactory__PoolAlreadyExists.selector,
+                address(_token)
+            )
+        );
         factory.createPool(address(_token));
     }
 
@@ -36,7 +41,10 @@ contract PoolFactoryTest is Test {
     ///////////////////////////////////////////////////////////////////////////
 
     //@ q can you create more than one pool? fuzz
-    function testCanCreateManyPools(ERC20Mock _tokenA, ERC20Mock _tokenB) public {
+    function testCanCreateManyPools(
+        ERC20Mock _tokenA,
+        ERC20Mock _tokenB
+    ) public {
         console.log("hello");
         _tokenA = new ERC20Mock();
         _tokenB = new ERC20Mock();

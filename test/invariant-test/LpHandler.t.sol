@@ -7,7 +7,7 @@ import { ERC20Mock } from "@openzeppelin/contracts/mocks/token/ERC20Mock.sol";
 import { IERC20 } from "@openzeppelin/contracts/interfaces/IERC20.sol";
 import { PoolFactory } from "../../src/PoolFactory.sol";
 
-contract Handler is Test {
+contract LpHandler is Test {
     TSwapPool pool;
     ERC20Mock poolToken;
     ERC20Mock weth;
@@ -45,8 +45,9 @@ contract Handler is Test {
         LP_CURRENT_BALANCE -= _amount;
         console.log("amount of the param: ", _amount);
         console.log("remianing LP balance: ", LP_CURRENT_BALANCE);
-        vm.startPrank(liquidityProvider);
 
+        // starting prank and deposit
+        vm.startPrank(liquidityProvider);
         weth.approve(address(pool), _amount);
         poolToken.approve(address(pool), _amount);
         pool.deposit(_amount, _amount, _amount, uint64(block.timestamp));

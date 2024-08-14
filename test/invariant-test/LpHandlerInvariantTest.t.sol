@@ -7,13 +7,13 @@ import { ERC20Mock } from "@openzeppelin/contracts/mocks/token/ERC20Mock.sol";
 import { IERC20 } from "@openzeppelin/contracts/interfaces/IERC20.sol";
 import { PoolFactory } from "../../src/PoolFactory.sol";
 import { StdInvariant } from "forge-std/StdInvariant.sol";
-import { Handler } from "./Handler.t.sol";
+import { LpHandler } from "./LpHandler.t.sol";
 
 contract LpHandlerInvariantTest is StdInvariant, Test {
     TSwapPool pool;
     ERC20Mock poolToken;
     ERC20Mock weth;
-    Handler handler;
+    LpHandler lpHandler;
     address liquidityProvider = makeAddr("liquidityProvider");
     address user = makeAddr("user");
     uint256 public constant LP_STARTING_BALANCE = 200e18;
@@ -27,7 +27,7 @@ contract LpHandlerInvariantTest is StdInvariant, Test {
         weth = new ERC20Mock();
         pool = new TSwapPool(address(poolToken), address(weth), "LTokenA", "LA");
         MINIMUM_WETH_DEPOSIT = pool.getMinimumWethDepositAmount();
-        handler = new Handler(pool, poolToken, weth);
+        lpHandler = new LpHandler(pool, poolToken, weth);
 
         weth.mint(liquidityProvider, LP_STARTING_BALANCE);
         poolToken.mint(liquidityProvider, LP_STARTING_BALANCE);
@@ -36,7 +36,7 @@ contract LpHandlerInvariantTest is StdInvariant, Test {
         poolToken.mint(user, USER_STARTING_BALANCE);
 
         /// TODO: add invariant target contract
-        targetContract(address(handler));
+        targetContract(address(lpHandler));
         // targetSender(address(user));
         targetSender(address(liquidityProvider));
     }
@@ -45,7 +45,7 @@ contract LpHandlerInvariantTest is StdInvariant, Test {
         uint256 wethBalanceOfLiquidProvider = weth.balanceOf(liquidityProvider);
         uint256 poolTokenBalanceOfLiquidProvider = poolToken.balanceOf(liquidityProvider);
         console.log("wethBalanceOfLiquidProvider", wethBalanceOfLiquidProvider);
-        console.log("number of deposits", handler.countLpDeposit());
+        console.log("number of deposits", lpHandler.countLpDeposit());
         assertEq(weth.balanceOf(address(pool)), LP_STARTING_BALANCE - wethBalanceOfLiquidProvider);
     }
 
